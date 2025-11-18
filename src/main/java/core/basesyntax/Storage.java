@@ -7,7 +7,6 @@ public interface Storage<K, V> {
 
     int size();
 
-
     class StorageImpl<K, V> implements Storage<K, V> {
         private static final int MAX_CAPACITY = 10;
 
@@ -22,7 +21,7 @@ public interface Storage<K, V> {
 
                 if ((key == null && currentKey == null)
                         || (key != null && key.equals(currentKey))) {
-                    values[i] = value; // replace existing value
+                    values[i] = value;
                     return;
                 }
             }
@@ -53,4 +52,5 @@ public interface Storage<K, V> {
         }
     }
 }
+
 
