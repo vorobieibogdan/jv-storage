@@ -19,18 +19,16 @@ public interface Storage<K, V> {
             for (int i = 0; i < size; i++) {
                 K currentKey = (K) keys[i];
 
-                if ((key == null && currentKey == null)
-                        || (key != null && key.equals(currentKey))) {
+                if ((currentKey == null && key == null)
+                        || (currentKey != null && currentKey.equals(key))) {
                     values[i] = value;
                     return;
                 }
             }
 
-            if (size < MAX_CAPACITY) {
-                keys[size] = key;
-                values[size] = value;
-                size++;
-            }
+            keys[size] = key;
+            values[size] = value;
+            size++;
         }
 
         @Override
@@ -38,8 +36,8 @@ public interface Storage<K, V> {
             for (int i = 0; i < size; i++) {
                 K currentKey = (K) keys[i];
 
-                if ((key == null && currentKey == null)
-                        || (key != null && key.equals(currentKey))) {
+                if ((currentKey == null && key == null)
+                        || (currentKey != null && currentKey.equals(key))) {
                     return (V) values[i];
                 }
             }
@@ -52,5 +50,3 @@ public interface Storage<K, V> {
         }
     }
 }
-
-
