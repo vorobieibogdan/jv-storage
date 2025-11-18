@@ -1,50 +1,55 @@
 package core.basesyntax;
 
-public class Storage<K, V> {
+public interface Storage<K, V> {
+    void put(K key, V value);
 
-    private static final int MAX_CAPACITY = 10;
+    V get(K key);
 
-    private final Object[] keys;
-    private final Object[] values;
-    private int size;
+    int size();
 
-    public Storage() {
-        keys = new Object[MAX_CAPACITY];
-        values = new Object[MAX_CAPACITY];
-        size = 0;
-    }
 
-    public void put(K key, V value) {
-        for (int i = 0; i < size; i++) {
-            K currentKey = (K) keys[i];
+    class StorageImpl<K, V> implements Storage<K, V> {
+        private static final int MAX_CAPACITY = 10;
 
-            if ((key == null && currentKey == null)
-                    || (key != null && key.equals(currentKey))) {
-                values[i] = value; // replace existing value
-                return;
+        private final Object[] keys = new Object[MAX_CAPACITY];
+        private final Object[] values = new Object[MAX_CAPACITY];
+        private int size = 0;
+
+        @Override
+        public void put(K key, V value) {
+            for (int i = 0; i < size; i++) {
+                K currentKey = (K) keys[i];
+
+                if ((key == null && currentKey == null)
+                        || (key != null && key.equals(currentKey))) {
+                    values[i] = value; // replace existing value
+                    return;
+                }
+            }
+
+            if (size < MAX_CAPACITY) {
+                keys[size] = key;
+                values[size] = value;
+                size++;
             }
         }
 
-        if (size < MAX_CAPACITY) {
-            keys[size] = key;
-            values[size] = value;
-            size++;
-        }
-    }
+        @Override
+        public V get(K key) {
+            for (int i = 0; i < size; i++) {
+                K currentKey = (K) keys[i];
 
-    public V get(K key) {
-        for (int i = 0; i < size; i++) {
-            K currentKey = (K) keys[i];
-
-            if ((key == null && currentKey == null)
-                    || (key != null && key.equals(currentKey))) {
-                return (V) values[i];
+                if ((key == null && currentKey == null)
+                        || (key != null && key.equals(currentKey))) {
+                    return (V) values[i];
+                }
             }
+            return null;
         }
-        return null;
-    }
 
-    public int size() {
-        return size;
+        @Override
+        public int size() {
+            return size;
+        }
     }
 }
