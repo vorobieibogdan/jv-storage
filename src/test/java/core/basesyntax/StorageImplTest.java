@@ -1,6 +1,5 @@
 package core.basesyntax;
 
-import core.basesyntax.impl.Storage;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package core.basesyntax.impl;
+package core.basesyntax;
 
 public class StorageImpl<K, V> implements Storage<K, V> {
 
